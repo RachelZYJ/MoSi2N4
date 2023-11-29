@@ -1,0 +1,12 @@
+#!/bin/sh
+#BSUB -n 48
+#BSUB -q  normal
+#BSUB -o %J.out
+#BSUB -e %J.err
+#BSUB -R "span[ptile=24]"
+hostfile=`echo $LSB_DJOB_HOSTFILE`
+NP=`cat $hostfile | wc -l`
+mkdir  $LSB_JOBID
+source /share/profile.d/intel.sh
+mpirun -np $NP -machinefile $LSB_DJOB_HOSTFILE  /share/soft/vasp_intelmpi/bin/vasp5.4.1/vasp_std
+
